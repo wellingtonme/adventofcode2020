@@ -1,10 +1,10 @@
 import { day1Part1, day1Part2 } from "./day1";
-import { day2Part1 } from "./day2";
+import { day2Part1, day2Part2 } from "./day2";
 
 class Solutions {
   all(): void {
     this.printDay(1, [day1Part1, day1Part2]);
-    this.printDay(2, [day2Part1]);
+    this.printDay(2, [day2Part1, day2Part2]);
   }
 
   printDay = (day: number, functions: Function[]): void => {
