@@ -27,7 +27,7 @@ const parseLine = (line: string): ParsedLine => {
   };
 };
 
-// this is for part 1
+// validation for part 1
 const isWithinRange = (
   numberOfMatchs: number,
   parsedLine: ParsedLine
@@ -43,22 +43,7 @@ const isValidPassword = (parsedLine: ParsedLine): boolean => {
   return isWithinRange(numberOfMatchs, parsedLine);
 };
 
-// solution for part 1
-export const getNumberOfValidPasswords = (): number =>
-  input.reduce((totalOfValidPasswords, line) => {
-    try {
-      const parsedLine = parseLine(line);
-
-      if (isValidPassword(parsedLine)) {
-        totalOfValidPasswords += 1;
-      }
-
-      return totalOfValidPasswords;
-    } catch (error) {
-      return totalOfValidPasswords;
-    }
-  }, 0);
-
+// validation for part 2
 const isValidPasswordMatchingPositions = (line: ParsedLine): boolean => {
   const splitedPassword = line.password.split("");
   // -1 because the numbers are 1 index based not 0 index based
@@ -77,20 +62,20 @@ const isValidPasswordMatchingPositions = (line: ParsedLine): boolean => {
   const isSecondLetterValid = secondLetter === line.requiredLetter;
 
   // at this point we are sure that both are not equal and matching
-  // if they are both equal both here will be false due first check
+  // if they are both equal here they will be false due first check
   // if one of them is valid this is a valid password otherwise it is false
   const isValid = isFirstLetterValid || isSecondLetterValid;
 
   return isValid;
 };
 
-// solution for part 2
-export const getNumberOfValidPasswordsMatchingPositions = (): number =>
+// generic call for both solutions
+const _getNumberOfValidPasswords = (validator: Function): number =>
   input.reduce((totalOfValidPasswords, line) => {
     try {
       const parsedLine = parseLine(line);
 
-      if (isValidPasswordMatchingPositions(parsedLine)) {
+      if (validator(parsedLine)) {
         totalOfValidPasswords += 1;
       }
 
@@ -99,3 +84,11 @@ export const getNumberOfValidPasswordsMatchingPositions = (): number =>
       return totalOfValidPasswords;
     }
   }, 0);
+
+// solution for part 1
+export const getNumberOfValidPasswords = (): number =>
+  _getNumberOfValidPasswords(isValidPassword);
+
+// solution for part 2
+export const getNumberOfValidPasswordsMatchingPositions = (): number =>
+  _getNumberOfValidPasswords(isValidPasswordMatchingPositions);
