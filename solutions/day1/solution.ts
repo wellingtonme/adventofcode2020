@@ -1,14 +1,8 @@
 import input from "./input";
+import { sum } from "../utils";
 
 const getSortedInput = (): number[] =>
   input.sort((a, b) => (a === b ? 0 : a > b ? 1 : -1));
-
-const sum = (numbers: number[]): number =>
-  numbers.reduce((total, number) => {
-    total += number;
-
-    return total;
-  }, 0);
 
 const findNumber = (
   numbersToSearch: number[],

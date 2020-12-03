@@ -1,22 +1,40 @@
 import input from "./input";
+import { multiply } from "../utils";
 
-export const getAmountOfTrees = (): number => {
+interface Slopes {
+  right: number;
+  down: number;
+}
+
+interface InputSlopes extends Slopes {
+  input: string[];
+}
+
+const isTree = ({ input, right, down }: InputSlopes): boolean =>
+  input[down][right] === "#";
+
+const shouldCicle = ({ input, right, down }: InputSlopes): boolean =>
+  right >= input[down].length;
+
+const getAmountOfTreesPerSlopes = (slopes: Slopes): number => {
   let amountOfTrees = 0;
-  // starting at the first jump 3 right (j0 + 3 = j3) and one down (i0 + 1 = i1)
-  for (let i = 1, j = 3; i < input.length; i += 1) {
-    console.log(`i is ${i} j is ${j} und char is ${input[i][j]}`);
-
-    const isTree = input[i][j] === "#";
-
-    if (isTree) {
+  // starting at the first jump
+  // slopes.right (j0 + slopes.right) and
+  // slopes.down (i0 + slopes.down)
+  for (
+    let down = slopes.down, right = slopes.right;
+    down < input.length;
+    down += slopes.down
+  ) {
+    if (isTree({ input, right, down })) {
       amountOfTrees += 1;
     }
 
-    j += 3; // walk three to the right
+    right += slopes.right; // walk to the right
 
-    if (j >= input[i].length) {
-      // as the pattern repeats just got back to the beginning
-      j = j - input[1].length;
+    if (shouldCicle({ input, right, down })) {
+      // as the pattern repeats just go back to the beginning
+      right = right - input[1].length;
 
       continue;
     }
@@ -25,6 +43,28 @@ export const getAmountOfTrees = (): number => {
   return amountOfTrees;
 };
 
+export const getAmountOfTrees = (): number =>
+  getAmountOfTreesPerSlopes({
+    right: 3,
+    down: 1,
+  });
+
 export const getTotalOfTrees = (): number => {
-  return 0;
+  const slopes: Slopes[] = [
+    { right: 1, down: 1 },
+    { right: 3, down: 1 },
+    { right: 5, down: 1 },
+    { right: 7, down: 1 },
+    { right: 1, down: 2 },
+  ];
+
+  const allTreesFound: number[] = slopes.reduce((allTreesCount, slope) => {
+    const totalOfTrees = getAmountOfTreesPerSlopes(slope);
+
+    allTreesCount.push(totalOfTrees);
+
+    return allTreesCount;
+  }, [] as number[]);
+
+  return multiply(allTreesFound);
 };

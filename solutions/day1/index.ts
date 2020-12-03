@@ -1,15 +1,5 @@
 import { findSolution } from "./solution";
-
-const multiply = (numbers: number[]): number =>
-  numbers.reduce((total, number) => {
-    if (total === null) {
-      return number;
-    }
-
-    total *= number;
-
-    return total;
-  });
+import { multiply } from "../utils";
 
 export const day1Part1 = (): void => {
   const numbers = findSolution(2);
