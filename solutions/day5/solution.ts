@@ -20,16 +20,19 @@ const findEntryPerMap = (
   map: string[],
   initialLowHighValue: RangeType
 ): number => {
-  const lowHighValue: RangeType = map.reduce((rangeMap, coordinate) => {
-    const isUpperEntry = isUpperCoordinate(coordinate);
-    const half = (rangeMap.high - rangeMap.low) / 2;
+  const lowHighValue: RangeType = map.reduce<RangeType>(
+    (rangeMap, coordinate) => {
+      const isUpperEntry = isUpperCoordinate(coordinate);
+      const half = (rangeMap.high - rangeMap.low) / 2;
 
-    if (isUpperEntry) {
-      return { low: rangeMap.low, high: rangeMap.low + half };
-    }
+      if (isUpperEntry) {
+        return { low: rangeMap.low, high: rangeMap.low + half };
+      }
 
-    return { low: rangeMap.high - half, high: rangeMap.high };
-  }, initialLowHighValue);
+      return { low: rangeMap.high - half, high: rangeMap.high };
+    },
+    initialLowHighValue
+  );
 
   return lowHighValue.low;
 };
