@@ -3,14 +3,14 @@ import {
   getNumberOfValidPassportsWithRules,
 } from "./solution";
 
-export const day4Part1 = async (): Promise<void> => {
-  const numberOfTrees = await getNumberOfValidPassports();
+export const day4Part1 = (): void => {
+  const numberOfTrees = getNumberOfValidPassports();
 
   console.log(`--- result part 1: ${numberOfTrees}`);
 };
 
-export const day4Part2 = async (): Promise<void> => {
-  const numberOfTrees = await getNumberOfValidPassportsWithRules();
+export const day4Part2 = (): void => {
+  const numberOfTrees = getNumberOfValidPassportsWithRules();
 
-  console.log(`--- result part 1: ${numberOfTrees}`);
+  console.log(`--- result part 2: ${numberOfTrees}`);
 };
