@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no tests installed\" && exit 1",
     "clean": "rimraf dist/",
-    "copy-files": "copyfiles -u 1 solutions/**/input.txt dist/solutions/",
+    "copy-files": "copyfiles -u 1 solutions/**/**.txt dist/solutions/",
     "build": "npm run clean && tsc && npm run copy-files",
     "prestart": "npm run build",
     "start": "node dist/index.js"
